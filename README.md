@@ -101,9 +101,3 @@ Install dengan:
 ```bash
 pip install -r requirements.txt
 ```
-
-## Notes
-
-- Semua script di folder `src/` harus dijalankan dari dalam folder `src/`
-- Output akan otomatis disimpan ke folder yang benar (`models/`, `results/`)
-- Dataset harus berada di `data/gtzan/genres_original/`
