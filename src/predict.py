@@ -5,9 +5,14 @@ Predict genre for a single audio file
 import sys
 import numpy as np
 import joblib
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent))
+
 from utils import loadAudioFile, extractAllFeatures
 
-def predictGenre(audioPath, modelPath='genre_classifier.pkl'):
+def predictGenre(audioPath, modelPath='../models/genre_classifier.pkl'):
     """
     Predict genre of an audio file
     

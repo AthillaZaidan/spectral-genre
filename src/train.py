@@ -20,6 +20,11 @@ from sklearn.feature_selection import SelectKBest, mutual_info_classif
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import joblib
+import sys
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent))
 
 from utils import loadAudioFile, extractAllFeatures
 
@@ -30,7 +35,7 @@ def main():
     print("MUSIC GENRE CLASSIFICATION - TRAINING PIPELINE")
     print("="*80)
     
-    datasetPath = './data/gtzan/genres_original'
+    datasetPath = '../data/gtzan/genres_original'
     
     if not os.path.exists(datasetPath):
         print(f"Error: Dataset path not found: {datasetPath}")
@@ -203,8 +208,9 @@ def main():
     plt.ylabel('True Label')
     plt.xlabel('Predicted Label')
     plt.tight_layout()
-    plt.savefig('confusion_matrix.png', dpi=300, bbox_inches='tight')
-    print("\nSaved: confusion_matrix.png")
+    os.makedirs('../results', exist_ok=True)
+    plt.savefig('../results/confusion_matrix.png', dpi=300, bbox_inches='tight')
+    print("\nSaved: ../results/confusion_matrix.png")
     
     modelPackage = {
         'scaler': dataScaler,
@@ -216,8 +222,9 @@ def main():
         'genres': genreList
     }
     
-    joblib.dump(modelPackage, 'genre_classifier.pkl')
-    print("Saved: genre_classifier.pkl")
+    os.makedirs('../models', exist_ok=True)
+    joblib.dump(modelPackage, '../models/genre_classifier.pkl')
+    print("Saved: ../models/genre_classifier.pkl")
     
     resultsData = {
         'Method': ['Cross-Validation (5-fold)', 'Hold-out Test Set'],
@@ -228,8 +235,9 @@ def main():
         ]
     }
     resultsDf = pd.DataFrame(resultsData)
-    resultsDf.to_csv('training_results.csv', index=False)
-    print("Saved: training_results.csv")
+    os.makedirs('../results', exist_ok=True)
+    resultsDf.to_csv('../results/training_results.csv', index=False)
+    print("Saved: ../results/training_results.csv")
     
     print("\n" + "="*80)
     print("TRAINING COMPLETED SUCCESSFULLY!")

@@ -15,6 +15,11 @@ from sklearn.feature_selection import SelectKBest, mutual_info_classif
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 import joblib
+import sys
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent))
 
 from utils import loadAudioFile, extractAllFeatures
 
@@ -22,7 +27,7 @@ def main():
     print("QUICK TRAINING MODE")
     print("="*60)
     
-    datasetPath = './data/gtzan/genres_original'
+    datasetPath = '../data/gtzan/genres_original'
     genreList = ['blues', 'classical', 'country', 'disco', 'hiphop',
                  'jazz', 'metal', 'pop', 'reggae', 'rock']
     
@@ -71,8 +76,10 @@ def main():
         'model': model,
         'genres': genreList
     }
-    joblib.dump(modelPackage, 'genre_classifier_fast.pkl')
-    print("Saved: genre_classifier_fast.pkl")
+    import os
+    os.makedirs('../models', exist_ok=True)
+    joblib.dump(modelPackage, '../models/genre_classifier_fast.pkl')
+    print("Saved: ../models/genre_classifier_fast.pkl")
 
 
 if __name__ == '__main__':

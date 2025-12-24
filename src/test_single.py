@@ -5,9 +5,14 @@ Test model on a single file with detailed output
 import sys
 import numpy as np
 import joblib
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.append(str(Path(__file__).parent))
+
 from utils import loadAudioFile, extractAllFeatures
 
-def testSingleFile(audioPath, modelPath='genre_classifier.pkl'):
+def testSingleFile(audioPath, modelPath='../models/genre_classifier.pkl'):
     """Test model on single file with detailed analysis"""
     
     print("="*60)
